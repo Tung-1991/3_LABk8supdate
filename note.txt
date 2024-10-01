@@ -1,0 +1,2 @@
+sudo apt update -y && sudo apt upgrade -y
+sudo echo "export PS1=\"\[\e[92m\]\u@\h:\w\\$\[\e[m\]\"" >> ~/.bashrc && source ~/.bashrc
