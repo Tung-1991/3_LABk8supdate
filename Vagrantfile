@@ -5,6 +5,7 @@ Vagrant.configure("2") do |config|
   #shell all
   common_shell_script = <<-SHELL
     #cau hinh tong
+    sudo sh -c 'echo "export PS1=\"\\[\\e[92m\\]\\u@\\h:\\w\\\\$\\[\\e[m\\]\"" >> /home/vagrant/.bashrc'
     sudo timedatectl set-timezone 'Asia/Ho_Chi_Minh' 
     sudo systemctl stop apparmor && sudo systemctl disable apparmor
     sudo systemctl stop ufw && sudo systemctl disable ufw
@@ -16,7 +17,7 @@ Vagrant.configure("2") do |config|
     sudo modprobe br_netfilter
     sudo echo -e "vm.swappiness=0\nnet.ipv4.ip_forward = 1\nnet.ipv6.conf.all.disable_ipv6 = 1\nnet.ipv6.conf.default.disable_ipv6 = 1\nnet.ipv6.conf.lo.disable_ipv6 = 1\nnet.bridge.bridge-nf-call-iptables = 1" | sudo tee -a /etc/sysctl.conf > /dev/null && sudo sysctl -p
     sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT.*/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash ipv6.disable=1"/' /etc/default/grub && sudo update-grub
-    sudo swapoff -a && sudo sed -i '/ swap / s/^/#/' /etc/fstab
+    sudo swapoff -a && sudo sed -i '/\/swap.img/s/^/#/' /etc/fstab
     #them node vao hosts
     echo "192.168.41.10 control1" | sudo tee -a /etc/hosts
     echo "192.168.41.11 worker1" | sudo tee -a /etc/hosts
