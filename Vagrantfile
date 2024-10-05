@@ -23,9 +23,10 @@ Vagrant.configure("2") do |config|
     echo "192.168.41.11 worker1" | sudo tee -a /etc/hosts
     echo "192.168.41.12 worker2" | sudo tee -a /etc/hosts
     echo "192.168.41.13 worker3" | sudo tee -a /etc/hosts
+    echo "192.168.41.14 nfsrepo" | sudo tee -a /etc/hosts
     #tao phan vung luu tru tuy nhien clone vagrant nay ko co free lvm nen can add o cung
     sudo mkdir /data
-    #sudo lvcreate -L 20G -n data-lv ubuntu-vg
+    #sudo lvcreate -L 20G -n data-lv ubuntu-vg         
     #sudo mkfs.ext4 /dev/ubuntu-vg/data-lv  
     #sudo mount /dev/ubuntu-vg/data-lv /data
     #sudo sh -c 'echo "/dev/ubuntu-vg/data-lv /data ext4 defaults 0 0" >> /etc/fstab'
