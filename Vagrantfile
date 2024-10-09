@@ -23,7 +23,6 @@ Vagrant.configure("2") do |config|
     echo "192.168.41.11 worker1" | sudo tee -a /etc/hosts
     echo "192.168.41.12 worker2" | sudo tee -a /etc/hosts
     echo "192.168.41.13 worker3" | sudo tee -a /etc/hosts
-    echo "192.168.41.14 nfsrepo" | sudo tee -a /etc/hosts
     #tao phan vung luu tru tuy nhien clone vagrant nay ko co free lvm nen can add o cung
     sudo mkdir /data
     #sudo lvcreate -L 20G -n data-lv ubuntu-vg         
@@ -48,8 +47,16 @@ Vagrant.configure("2") do |config|
       node.vm.hostname = vm[:name]
       node.vm.network "private_network", ip: vm[:ip]
       node.vm.provider "vmware_desktop" do |vb|
-        vb.cpus = 2
-        vb.memory = 4096
+        if vm[:name] == "worker1"
+          vb.cpus = 8   # Cấu hình worker1 với 6 CPU
+          vb.memory = 10240  # Cấu hình worker1 với 8GB RAM
+        elsif vm[:name] == "control1"
+          vb.cpus = 2
+          vb.memory = 2048
+        else
+          vb.cpus = 6
+          vb.memory = 6144
+        end
       end
       if vm[:name] != "control1"
         node.vm.provision "shell", inline: <<-SHELL, privileged: false
